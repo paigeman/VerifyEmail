@@ -44,7 +44,7 @@
 //    private static String fromEmailPw = "";
 //    private static String fromEmailPw = "";
 ```
-#### [更换发送方邮箱服务器更换为相应厂商的邮箱服务器](src/main/java/org/fade/verify/utils/EmailUtil.java)
+#### [把发送方邮箱服务器更换为相应厂商的邮箱服务器](src/main/java/org/fade/verify/utils/EmailUtil.java)
 ```java
 //发送邮箱服务器
     private static String myEmailSMTPHost = "smtp.qq.com";
