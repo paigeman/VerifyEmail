@@ -1,12 +1,14 @@
 package org.fade.verify.utils;
 
+import com.sun.mail.util.MailSSLSocketFactory;
+
 import javax.mail.MessagingException;
-import javax.mail.NoSuchProviderException;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
+import java.security.GeneralSecurityException;
 import java.util.Date;
 import java.util.Properties;
 
@@ -23,18 +25,26 @@ public class EmailUtil {
     private static Session session;
 
     //发送者邮箱
-    private static String fromEmail = "976050219@qq.com";
+    //TODO: use your own email
+    private static String fromEmail = "@qq.com";
+//    private static String fromEmail = "@163.com";
+//    private static String fromEmail = "@gmail.com";
 
     //发送者密码
-    private static String fromEmailPw = "kwezlraefvuybfej";
+    //TODO: use your own password
+    private static String fromEmailPw = "";
+//    private static String fromEmailPw = "";
+//    private static String fromEmailPw = "";
 
     //发送邮箱服务器
     private static String myEmailSMTPHost = "smtp.qq.com";
+//    private static String myEmailSMTPHost = "smtp.gmail.com";
 
     /**
      * 初始化
+     * @throws GeneralSecurityException
      * */
-    public static void init(){
+    public static void init() throws GeneralSecurityException {
         props = new Properties();
         //设置发送协议为smtp
         props.setProperty("mail.transport.protocol", "smtp");
@@ -42,6 +52,16 @@ public class EmailUtil {
         props.setProperty("mail.smtp.host", myEmailSMTPHost);
         //设置为需要认证
         props.setProperty("mail.smtp.auth", "true");
+        //设置开启SSL,Gmail必须开启,QQ或网易可以设置不开启
+        MailSSLSocketFactory sf = new MailSSLSocketFactory();
+        sf.setTrustAllHosts(true);
+        props.put("mail.smtp.ssl.enable", "true");
+        props.put("mail.smtp.ssl.socketFactory", sf);
+//        props.setProperty("mail.smtp.socketFactory.port", "465");
+        //Gmail请设置代理，需魔法上网，
+        // 相应服务器地址、端口请更换为自己的代理服务器地址和端口
+//        props.setProperty("mail.smtp.socks.host","127.0.0.1");
+//        props.setProperty("mail.smtp.socks.port","7890");
         session = Session.getInstance(props);
         //设置为debug模式，可查看log
         session.setDebug(true);
