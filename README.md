@@ -63,6 +63,37 @@
 //        props.setProperty("mail.smtp.socks.host","127.0.0.1");
 //        props.setProperty("mail.smtp.socks.port","7890");
 ```
+#### [验证码可以设置长度，也可以自定义修改验证码格式](src/main/java/org/fade/verify/utils/VerificationCodeUtil.java)
+```java
+/**
+     * 生成n位验证码
+     * @param length 验证码长度
+     * */
+    public static String generateVerificationCode(int length){
+        StringBuilder sb = new StringBuilder();
+        Random random = new Random();
+        for(int i = 0;i<length;i++){
+            //type为当前位类型：小写字母(2)、数字(0)、大写字母(1)
+            int type = random.nextInt(3);
+            int content = 0;
+            switch (type){
+                case 0:
+                    content = random.nextInt(10) + 48;
+                    break;
+                case 1:
+                    content = random.nextInt(26) + 65;
+                    break;
+                case 2:
+                    content = random.nextInt(26) + 97;
+                    break;
+                default:
+                    break;
+            }
+            sb.append((char)content);
+        }
+        return sb.toString();
+    }
+```
 #### [在测试区可以测试例子](src/test/java/org/fade/verify/SendVerifyEmailTest.java)
 ```java
 /**
